@@ -1,7 +1,6 @@
 
 
 
-
-export const db = {nate: "hello"};
+export const db = {nate: "Nathan"};
 
 

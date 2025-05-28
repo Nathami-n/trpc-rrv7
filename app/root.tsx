@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { ReactTRPCWithQueryProvider } from "./utils/trpc/react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <ReactTRPCWithQueryProvider>{children}</ReactTRPCWithQueryProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

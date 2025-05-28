@@ -1,4 +1,4 @@
-import { trpc } from "~/utils/trpc/react";
+import { trpc } from "~/utils/trpc/trpc";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
@@ -8,11 +8,23 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
-  const data = await trpc.greeting.hello.query({ name: "World" });
-  return { data };
-};
+export default function Home({}: Route.ComponentProps) {
+  const greetinQuery = trpc.greeting.hello.useQuery({ name: "Nathan" });
+  const mutation = trpc.post.useMutation();
+  return (
+    <div>
+      <div>
+        <button
+          onClick={async () => {
+            const response = await mutation.mutateAsync();
 
-export default function Home({ loaderData: { data } }: Route.ComponentProps) {
-  return <div>{data}</div>;
+            console.log(response);
+          }}
+          className="border bg-white rounded-lg p-2 mt-4 ml-5 cursor-pointer"
+        >
+          Click me
+        </button>
+      </div>
+    </div>
+  );
 }
