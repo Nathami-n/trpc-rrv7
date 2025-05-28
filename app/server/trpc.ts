@@ -1,4 +1,18 @@
-import { initTRPC } from "@trpc/server";
+import superjson from "superjson";
+import { auth } from "~/utils/auth/server";
 import { db } from "./db";
 
-export const tr = initTRPC.context<{db: typeof db}>().create();
+export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const authSession = await auth.api.getSession({
+    headers: opts.headers,
+  });
+
+  const source = opts.headers.get("x-trpc-source") ?? "unknown";
+
+  console.log("Source by", authSession?.user.email);
+
+  return {
+    db,
+    user: authSession?.user,
+  };
+};
