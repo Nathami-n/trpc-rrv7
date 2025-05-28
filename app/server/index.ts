@@ -1,6 +1,9 @@
-import { router } from "./trpc";
-import {} from "@trpc/server/adapters/express"
+import {tr} from "./trpc";
+import {greetingRouter} from "./routers/greeting";
 
-const appRouter = router({
 
+export const appRouter = tr.router({
+  greeting: greetingRouter
 })
+
+export type AppRouter = typeof appRouter;

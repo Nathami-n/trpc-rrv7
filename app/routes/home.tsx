@@ -1,3 +1,4 @@
+import { trpc } from "~/utils/trpc/react";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
@@ -7,6 +8,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
-  return <div >Trpc example</div>;
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const data = await trpc.greeting.hello.query({ name: "World" });
+  return { data };
+};
+
+export default function Home({ loaderData: { data } }: Route.ComponentProps) {
+  return <div>{data}</div>;
 }
