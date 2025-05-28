@@ -1,9 +1,18 @@
-import { tr } from "../trpc";
-import { z } from "zod";
+import type { TRPCRouterRecord } from "@trpc/server";
+import { protectedProcedure, publicProcedure } from "../trpc";
 
-export const greetingRouter = tr.router({
-  hello: tr.procedure
-    .input(z.object({ name: z.string() }))
-  
-    .query(({ input, ctx}) => `Hello, ${ctx.db.nate}!`),
-});
+export const greetingRouter = {
+  hello: publicProcedure.query(() => {
+    return "Hello you";
+  }),
+
+  user: protectedProcedure.query(async ({ input, ctx }) => {
+    const user = await ctx.db.user.findFirst({
+      where: {
+        id: ctx.user.id,
+      },
+    });
+
+    return user;
+  }),
+} satisfies TRPCRouterRecord;
