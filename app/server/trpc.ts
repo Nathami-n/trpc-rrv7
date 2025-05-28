@@ -9,7 +9,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     headers: opts.headers,
   });
 
-  const source = opts.headers.get("x-trpc-source") ?? "unknown";
+  
 
   console.log("Source by", authSession?.user.email);
 

@@ -1,9 +1,8 @@
-import { tr } from "./trpc";
 import { greetingRouter } from "./routers/greeting";
+import { createTRPCRouter } from "./trpc";
 
-export const appRouter = tr.router({
+export const appRouter = createTRPCRouter({
   greeting: greetingRouter,
-  post: tr.procedure.mutation(async ({ ctx }) => ctx.db.nate),
 });
 
 export type AppRouter = typeof appRouter;

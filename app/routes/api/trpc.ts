@@ -2,6 +2,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { appRouter } from "~/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { db } from "~/server/db";
+import { createTRPCContext } from "~/server/trpc";
 
 export const loader = async (args: LoaderFunctionArgs) => {
   return handleRequest(args);
@@ -16,10 +17,10 @@ function handleRequest(args: LoaderFunctionArgs | ActionFunctionArgs) {
     endpoint: "/api/trpc",
     req: args.request,
     router: appRouter,
-    createContext: () => {
-      return {
-        db,
-      };
-    },
+   createContext: () => 
+    createTRPCContext({
+      headers: args.request.headers
+
+    })
   });
 }
