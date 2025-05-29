@@ -33,7 +33,6 @@ const t = initTRPC.context<Context>().create({
 });
 
 // caller factory for making server-side trpc calls
-
 export const creaetCallerFactory = t.createCallerFactory;
 
 // to create the router
