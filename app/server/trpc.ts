@@ -4,15 +4,11 @@ import { db } from "./db";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ZodError } from "zod";
 
+// this creates the trpc context
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const authSession = await auth.api.getSession({
     headers: opts.headers,
   });
-
-  
-
-  console.log("Source by", authSession?.user.email);
-
   return {
     db,
     user: authSession?.user,
