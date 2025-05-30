@@ -5,6 +5,8 @@ import SuperJSON from "superjson";
 import type { AppRouter } from "~/server/index";
 import { TRPCProvider } from "./trpc";
 
+
+// FUNCTION TO CREATE QUERY CLIENT FROM TANSTACK QUERY
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -53,7 +55,8 @@ export function ReactTRPCWithQueryProvider({
 }: {
   children: ReactNode;
 }) {
-  const queryClieent = getQueryClient();
+  // get the queryclient from tanstack query
+  const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
@@ -62,8 +65,8 @@ export function ReactTRPCWithQueryProvider({
   );
 
   return (
-    <QueryClientProvider client={queryClieent}>
-      <TRPCProvider trpcClient={trpcClient} queryClient={queryClieent}>
+    <QueryClientProvider client={queryClient}>
+      <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
         {children}
       </TRPCProvider>
     </QueryClientProvider>

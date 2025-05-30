@@ -7,6 +7,7 @@ export default function SignInPage() {
       callbackURL: "/user",
     });
   };
+  
   return (
     <div className="px-6 sm:px-0 max-w-sm min-h-screen mx-auto flex items-center justify-center">
       <button

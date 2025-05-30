@@ -6,4 +6,5 @@ export default [
   index("routes/home.tsx"),
   route("/user", "routes/user.tsx"),
   route("/signin", "routes/signin.tsx"),
+  route("/resource/test/*", "routes/resource/remix-typesafe-api.ts"),
 ] satisfies RouteConfig;

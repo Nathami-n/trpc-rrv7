@@ -1,8 +1,8 @@
 import superjson from "superjson";
 import { auth } from "~/utils/auth/server";
-import { db } from "./db";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { ZodError } from "zod";
+import { db } from "./db";
 
 // this creates the trpc context
 export const createTRPCContext = async (opts: { headers: Headers }) => {
@@ -28,8 +28,11 @@ const t = initTRPC.context<Context>().create({
   }),
 });
 
+
+//==== UTILITIES =====
+
 // caller factory for making server-side trpc calls
-export const creaetCallerFactory = t.createCallerFactory;
+export const createCallerFactory = t.createCallerFactory;
 
 // to create the router
 export const createTRPCRouter = t.router;
@@ -37,7 +40,6 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 // protected procedures
-
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   if (!ctx.user?.id) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
